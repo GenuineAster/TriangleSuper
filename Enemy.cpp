@@ -51,7 +51,7 @@ Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_,
     shape.setFillColor(color);
     shape.setOrigin(10,5);
     shape.setPosition(position);
-    sf::Vector2f direction(Destination - position);
+    sf::Vector2f direction{Destination - position};
     normalize(direction);
     (direction.x > 0) ? (shape.rotate(std::atan(direction.y / direction.x) * 180 / M_PI - 90)) : (shape.rotate(std::atan(direction.y / direction.x) * 180 / M_PI - 270));
 }

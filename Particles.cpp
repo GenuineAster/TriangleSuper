@@ -28,7 +28,7 @@ void Particles::setColor(sf::Color color)
 }
 
 Particles::Particles(sf::Color color, int particleSize, int rate, sf::Vector2f force, sf::Vector2i timeRange,
-          sf::Vector2f position, float radius_, sf::Vector2f direction, float maxRotation, sf::Vector2f rotation) : System(Texture)
+          sf::Vector2f position, float radius_, sf::Vector2f direction, float maxRotation, sf::Vector2f rotation) : System{Texture}
 {
     radius = radius_;
     Image.create(particleSize, particleSize, color);

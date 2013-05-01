@@ -57,23 +57,23 @@ int main()
     sf::Text textOverlay {"Current FPS: ", mainFont, 12};
     textOverlay.setPosition(5,5);
 
-    sf::RenderWindow mainWindow(sf::VideoMode(800, 600), "LD26");
+    sf::RenderWindow mainWindow{sf::VideoMode{800, 600}, "LD26"};
     mainWindow.setMouseCursorVisible(false);
 
     sf::View mainView;
     mainView.reset(sf::FloatRect(0.f,0.f,static_cast<float>(mainWindow.getSize().x), static_cast<float>(mainWindow.getSize().y)));
     mainView.setViewport(sf::FloatRect {0.f, 0.f, 1.f, 1.f});
 
-    Particles stars(sf::Color::White, 1, 2, sf::Vector2f(0.1,0.1), sf::Vector2i(5, 10), sf::Vector2f(mainWindow.getSize().x/2, mainWindow.getSize().y/2), 400.f,
-                    sf::Vector2f(0.1f, 0.1f), 80.f, sf::Vector2f(0.f, 360.f));
+    Particles stars{sf::Color::White, 1, 2, sf::Vector2f{0.1,0.1}, sf::Vector2i{5, 10}, sf::Vector2f{mainWindow.getSize().x/2.f, mainWindow.getSize().y/2.f}, 400.f,
+                    sf::Vector2f{0.1f, 0.1f}, 80.f, sf::Vector2f{0.f, 360.f}};
 
-    float playerSize = 10.f;
-    sf::CircleShape player(playerSize, 6);
-    player.setFillColor(sf::Color(80,80,80,255));
-    player.setOrigin(sf::Vector2f(playerSize,playerSize));
+    float playerSize {10.f};
+    sf::CircleShape player{playerSize, 6};
+    player.setFillColor(sf::Color{80,80,80,255});
+    player.setOrigin(sf::Vector2f{playerSize,playerSize});
 
     std::vector<std::unique_ptr<Enemy>> Enemies;
-    sf::Color enemyColor = sf::Color::White;
+    sf::Color enemyColor{sf::Color::White};
 
     sf::Music mainMusic;
     mainMusic.openFromFile("LD26.ogg");
@@ -81,9 +81,9 @@ int main()
     mainMusic.setLoop(true);
     mainMusic.play();
 
-    int fpsLimit = 200;
+    int fpsLimit{200};
 
-    bool gameStatus = true;
+    bool gameStatus{true};
 
     menuSystem gameMenu;
 
@@ -190,7 +190,7 @@ int main()
 
             if(Score > 1.f)
             {
-                std::string scoreString = std::to_string(Score);
+                std::string scoreString{std::to_string(Score)};
                 scoreString = scoreString.substr(0, scoreString.find('.')+3);
                 gameMenu.scoreText.setString("Score: " + scoreString);
                 mainWindow.draw(gameMenu.scoreText);
@@ -206,21 +206,21 @@ int main()
             //Game
             if(levelClock.getElapsedTime().asMicroseconds()/1000.f > 1000.f/level)
             {
-                int randomInt = getRandomInteger(-1,9);
+                int randomInt{getRandomInteger(-1,9)};
                 levelClock.restart();
                 auto AI = (randomInt >= 4 ? enemyAILine : enemyAISine);
                 randomInt %= 4;
-                sf::Vector2f target(getRandomInteger(0.f, mainWindow.getSize().x), getRandomInteger(0.f, mainWindow.getSize().y));
+                sf::Vector2f target{static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().x))), static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))};
 
                 sf::Vector2f source = (randomInt < 2) ?
                   ((randomInt == 0) ?
-                     sf::Vector2f(-20.f, getRandomInteger(0, mainWindow.getSize().y)) :
-                     sf::Vector2f(mainWindow.getSize().x+20.f, getRandomInteger(0.f, mainWindow.getSize().y))) :
+                     sf::Vector2f{-20.f, static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))} :
+                     sf::Vector2f{static_cast<float>(mainWindow.getSize().x)+20.f, static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))}) :
                   ((randomInt == 3) ?
-                     sf::Vector2f(getRandomInteger(0, mainWindow.getSize().y), -20.f) :
-                     sf::Vector2f(getRandomInteger(0.f, mainWindow.getSize().y), mainWindow.getSize().x+20.f));
+                     sf::Vector2f{static_cast<float>(getRandomInteger(0, static_cast<float>(mainWindow.getSize().y))), -20.f} :
+                     sf::Vector2f{static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y))), static_cast<float>(mainWindow.getSize().x)+20.f});
 
-                Enemies.emplace_back(new Enemy(sf::Color::White, source, target, AI));
+                Enemies.emplace_back(new Enemy{sf::Color::White, source, target, AI});
                 levelCounter++;
                 if(levelCounter > level * 10)
                     level++;
@@ -253,7 +253,7 @@ int main()
             }
             stars.Update();
             mainWindow.draw(stars.getSystem());
-            std::string scoreString = std::to_string(scoreClock.getElapsedTime().asMilliseconds()*level/1000.f);
+            std::string scoreString{std::to_string(scoreClock.getElapsedTime().asMilliseconds()*level/1000.f)};
             scoreString = scoreString.substr(0, scoreString.find('.')+3);
 
             textOverlay.setString(std::string{"Level: "} + std::to_string(level) +

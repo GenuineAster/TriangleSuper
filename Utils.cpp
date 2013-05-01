@@ -6,8 +6,8 @@
 
 int getRandomInteger(double min, double max)
 {
-    double r = (double)rand() / (float)RAND_MAX;
-    return min + r * (max - min);
+    double r {static_cast<double>(rand()) / static_cast<double>(RAND_MAX)};
+    return static_cast<int>(min + r * (max - min));
 }
 
 sf::Color incrementColor(sf::Color &color)
