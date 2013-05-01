@@ -39,5 +39,5 @@ sf::Color incrementColor(sf::Color &color)
 
 bool collides(sf::Vector2f enemyPos, sf::Vector2f point)
 {
-    return sf::FloatRect{enemyPos, sf::Vector2f{20,15}}.contains(point);
+    return sf::FloatRect {enemyPos, sf::Vector2f{20,15}} .contains(point);
 }
