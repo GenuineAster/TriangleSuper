@@ -52,7 +52,7 @@ int main()
 
 
     sf::Font mainFont;
-    mainFont.loadFromFile("arial.ttf");
+    mainFont.loadFromFile("DejaVuSans.ttf");
 
     sf::Text textOverlay {"Current FPS: ", mainFont, 12};
     textOverlay.setPosition(5,5);
