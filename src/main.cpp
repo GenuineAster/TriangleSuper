@@ -57,7 +57,7 @@ int main()
     sf::Text textOverlay {"Current FPS: ", mainFont, 12};
     textOverlay.setPosition(5,5);
 
-    sf::RenderWindow mainWindow {sf::VideoMode{800, 600}, "LD26"};
+    sf::RenderWindow mainWindow {sf::VideoMode{800, 600}, "Triangle Super"};
     mainWindow.setMouseCursorVisible(false);
 
     sf::View mainView;
@@ -171,6 +171,11 @@ int main()
                         Score = 0.f;
                     }
                 }
+				else if(mainEvent.key.code == sf::Keyboard::Space)
+				{
+				    sf::Image screenshotImage(mainWindow.capture());
+					screenshotImage.saveToFile("screenshot.png");
+				}
                 break;
 
             default:
@@ -195,10 +200,8 @@ int main()
                 scoreString = scoreString.substr(0, scoreString.find('.')+3);
                 gameMenu.scoreText.setString("Score: " + scoreString);
                 mainWindow.draw(gameMenu.scoreText);
-                gameMenu.scoreText.setPosition(mainWindow.getSize().x/2 - gameMenu.scoreText.getGlobalBounds().width/2.f,
-                                               (mainWindow.getSize().y/3)-gameMenu.scoreText.getGlobalBounds().height/2.f);
+                gameMenu.scoreText.setPosition(mainWindow.getSize().x/2 - gameMenu.scoreText.getGlobalBounds().width/2.f, (mainWindow.getSize().y/3)-gameMenu.scoreText.getGlobalBounds().height/2.f);
             }
-
             mainWindow.display();
         }
 
@@ -244,7 +247,6 @@ int main()
                         Enemies[i].get()->getShape().getPosition().y > mainWindow.getSize().y + 100 ||
                         Enemies[i].get()->getShape().getPosition().y < -100)
                 {
-                    std::cout<<"Deleting enemy "<<i<<std::endl;
                     Enemies.erase(Enemies.begin()+i);
                 }
             }
