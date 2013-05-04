@@ -1,8 +1,5 @@
-/lib
-/bin
 bin/
 obj/
-/obj
 *.obj
 *.lib
 *.exe
@@ -13,6 +10,11 @@ obj/
 *.cbp
 *.depend
 *.layout
+Makefile
+CMakeCache.txt
+install_manifest.txt
+cmake_install.cmake
+CMakeFiles/
 
 #################
 ## Eclipse

@@ -52,7 +52,7 @@ int main()
 
 
     sf::Font mainFont;
-    mainFont.loadFromFile("DejaVuSans.ttf");
+    mainFont.loadFromFile("resources/DejaVuSans.ttf");
 
     sf::Text textOverlay {"Current FPS: ", mainFont, 12};
     textOverlay.setPosition(5,5);
@@ -77,7 +77,7 @@ int main()
     sf::Color enemyColor {sf::Color::White};
 
     sf::Music mainMusic;
-    mainMusic.openFromFile("LD26.ogg");
+    mainMusic.openFromFile("resources/LD26.ogg");
     mainMusic.setVolume(50.f);
     mainMusic.setLoop(true);
     mainMusic.play();
