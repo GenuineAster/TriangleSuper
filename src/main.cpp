@@ -77,7 +77,7 @@ int main()
     sf::Color enemyColor {sf::Color::White};
 
     sf::Music mainMusic;
-    mainMusic.openFromFile("resources/LD26.ogg");
+    mainMusic.openFromFile("resources/TriangleSuper.ogg");
     mainMusic.setVolume(50.f);
     mainMusic.setLoop(true);
     mainMusic.play();
