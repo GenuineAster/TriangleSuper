@@ -7,6 +7,7 @@
 #include <Thor/Math.hpp>
 #include <SFML/Graphics.hpp>
 #include "Particles.hpp"
+#include "Utils.hpp"
 #include <cmath>
 
 class Enemy
@@ -23,6 +24,6 @@ public:
     const thor::ConcaveShape &getShape();
     void Update(float delaTime);
     void render(sf::RenderWindow &window);
-    Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, std::function<sf::Vector2f(sf::Vector2f, sf::Vector2f&, sf::Vector2f&, sf::Vector2f&, float&, float&)> algorithm_);
+    Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, enemyAI algorithm_);
 };
 #endif // _ENEMY_HPP_

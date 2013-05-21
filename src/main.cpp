@@ -25,8 +25,8 @@ int main()
     float Score {0.f};
     scoreClock.restart();
 
-    std::function<sf::Vector2f(sf::Vector2f, sf::Vector2f&, sf::Vector2f&, sf::Vector2f&, float&, float)> enemyAISine =
-        [](sf::Vector2f currentPosition, sf::Vector2f &startingPoint, sf::Vector2f &Destination, sf::Vector2f &linearPosition, float &angle, float deltaTime)
+    enemyAI enemyAISine =
+    [](sf::Vector2f currentPosition, sf::Vector2f &startingPoint, sf::Vector2f &Destination, sf::Vector2f &linearPosition, float &angle, float deltaTime)
     {
         angle += 0.01 * deltaTime;
         sf::Vector2f direction = Destination - startingPoint;
@@ -40,8 +40,8 @@ int main()
         return linearPosition + deviation;
     };
 
-    std::function<sf::Vector2f(sf::Vector2f, sf::Vector2f&, sf::Vector2f&, sf::Vector2f&, float&, float)> enemyAILine =
-        [](sf::Vector2f currentPosition, sf::Vector2f &startingPoint, sf::Vector2f &Destination, sf::Vector2f &linearPosition, float &angle, float deltaTime)
+    enemyAI enemyAILine =
+    [](sf::Vector2f currentPosition, sf::Vector2f &startingPoint, sf::Vector2f &Destination, sf::Vector2f &linearPosition, float &angle, float deltaTime)
     {
         sf::Vector2f direction = Destination - startingPoint;
         normalize(direction);
@@ -64,7 +64,7 @@ int main()
     mainView.reset(sf::FloatRect(0.f,0.f,static_cast<float>(mainWindow.getSize().x), static_cast<float>(mainWindow.getSize().y)));
     mainView.setViewport(sf::FloatRect {0.f, 0.f, 1.f, 1.f});
 
-    Particles stars {sf::Color::White, 1, 2, sf::Vector2f{0.1,0.1}, sf::Vector2i{5, 10}, sf::Vector2f{mainWindow.getSize().x/2.f, mainWindow.getSize().y/2.f}, 400.f,
+    Particles stars {sf::Color::White, 2, 4, sf::Vector2f{0.1,0.1}, sf::Vector2i{5, 10}, sf::Vector2f{mainWindow.getSize().x/2.f, mainWindow.getSize().y/2.f}, 400.f,
                      sf::Vector2f{0.1f, 0.1f}, 80.f, sf::Vector2f{0.f, 360.f}
                     };
 

@@ -1,11 +1,12 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
 #include <cmath>
 
-#ifdef _WIN32
-#define M_PI 3.14159
-#endif
+using enemyAI = std::function<sf::Vector2f(sf::Vector2f, sf::Vector2f&, sf::Vector2f&, sf::Vector2f&, float&, float)>;
+
+constexpr double pi = 3.1415926535897932385;
 
 int getRandomInteger(double min, double max);
 

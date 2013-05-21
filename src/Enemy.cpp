@@ -34,8 +34,7 @@ void Enemy::render(sf::RenderWindow &window)
     window.draw(shape);
 }
 
-Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_,
-             std::function<sf::Vector2f(sf::Vector2f, sf::Vector2f&, sf::Vector2f&, sf::Vector2f&, float&, float&)> algorithm_) :
+Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, enemyAI algorithm_) :
     particleSystem(sf::Color(color.r-100, color.b-100, color.g-100, color.a), 4, 10, sf::Vector2f(0.5f,0.5f), sf::Vector2i(0,3),
                    position, 5.f, sf::Vector2f(5.f,5.f), 5.f, sf::Vector2f(0.f, 360.f))
 {
@@ -53,5 +52,5 @@ Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_,
     shape.setPosition(position);
     sf::Vector2f direction {Destination - position};
     normalize(direction);
-    (direction.x > 0) ? (shape.rotate(std::atan(direction.y / direction.x) * 180 / M_PI - 90)) : (shape.rotate(std::atan(direction.y / direction.x) * 180 / M_PI - 270));
+    (direction.x > 0) ? (shape.rotate(std::atan(direction.y / direction.x) * 180 / pi - 90)) : (shape.rotate(std::atan(direction.y / direction.x) * 180 / pi - 270));
 }
