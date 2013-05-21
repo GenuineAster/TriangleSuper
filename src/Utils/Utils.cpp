@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <cmath>
-#include "Utils.hpp"
+#include "Utils/Utils.hpp"
 
 float getRandomNumber(float min, float max)
 {

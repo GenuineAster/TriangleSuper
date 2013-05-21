@@ -3,8 +3,8 @@
 #include <Thor/Particles.hpp>
 #include <Thor/Math.hpp>
 #include <SFML/Graphics.hpp>
-#include "Particles.hpp"
-#include "Utils.hpp"
+#include "Particles/Particles.hpp"
+#include "Utils/Utils.hpp"
 
 const thor::ParticleSystem &Particles::getSystem(){return System;}
 void Particles::Update(){System.update(Clock.restart());}

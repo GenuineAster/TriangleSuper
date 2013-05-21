@@ -1,6 +1,4 @@
-#ifndef _PARTICLES_HPP_
-#define _PARTICLES_HPP_
-
+#pragma once
 #include <Thor/Graphics.hpp>
 #include <Thor/Shapes.hpp>
 #include <Thor/Particles.hpp>
@@ -24,4 +22,3 @@ public:
     void setColor(sf::Color color);
     Particles(sf::Color color, int particleSize, int rate, sf::Vector2f force, sf::Vector2i timeRange, sf::Vector2f position, float radius_, sf::Vector2f direction, float maxRotation, sf::Vector2f rotation);// : System(Texture);
 };
-#endif // _PARTICLES_HPP_

@@ -3,8 +3,8 @@
 #include <Thor/Particles.hpp>
 #include <Thor/Math.hpp>
 #include <SFML/Graphics.hpp>
-#include "Enemy.hpp"
-#include "Utils.hpp"
+#include "Enemy/Enemy.hpp"
+#include "Utils/Utils.hpp"
 
 
 void Enemy::render(sf::RenderWindow &window){window.draw(particleSystem.getSystem());window.draw(shape);}
@@ -16,6 +16,7 @@ void Enemy::setColor(sf::Color color)
     color.r -= 60;
     color.g -= 60;
     color.b -= 60;
+    color.a = 127;
     particleSystem.setColor(color);
 }
 
@@ -27,7 +28,7 @@ void Enemy::Update(float delaTime)
 }
 
 Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, enemyAI algorithm_) :
-    particleSystem(sf::Color(color.r-100, color.b-100, color.g-100, color.a), 4, 10, sf::Vector2f(0.5f,0.5f), sf::Vector2i(0,3),
+    particleSystem(sf::Color(color.r-100, color.b-100, color.g-100, 127), 4, 10, sf::Vector2f(0.5f,0.5f), sf::Vector2i(0,3),
                    position, 5.f, sf::Vector2f(5.f,5.f), 5.f, sf::Vector2f(0.f, 360.f))
 {
     Destination = Destination_;

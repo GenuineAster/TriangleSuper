@@ -1,13 +1,11 @@
-#ifndef _ENEMY_HPP_
-#define _ENEMY_HPP_
-
+#pragma once
 #include <Thor/Graphics.hpp>
 #include <Thor/Shapes.hpp>
 #include <Thor/Particles.hpp>
 #include <Thor/Math.hpp>
 #include <SFML/Graphics.hpp>
-#include "Particles.hpp"
-#include "Utils.hpp"
+#include "Particles/Particles.hpp"
+#include "Utils/Utils.hpp"
 #include <cmath>
 
 class Enemy
@@ -26,4 +24,3 @@ public:
     void render(sf::RenderWindow &window);
     Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, enemyAI algorithm_);
 };
-#endif // _ENEMY_HPP_
