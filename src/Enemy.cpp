@@ -7,6 +7,9 @@
 #include "Utils.hpp"
 
 
+void Enemy::render(sf::RenderWindow &window){window.draw(particleSystem.getSystem());window.draw(shape);}
+const thor::ConcaveShape &Enemy::getShape(){return shape;}
+
 void Enemy::setColor(sf::Color color)
 {
     shape.setFillColor(color);
@@ -16,22 +19,11 @@ void Enemy::setColor(sf::Color color)
     particleSystem.setColor(color);
 }
 
-const thor::ConcaveShape &Enemy::getShape()
-{
-    return shape;
-}
-
 void Enemy::Update(float delaTime)
 {
     shape.setPosition(algorithm(shape.getPosition(), startingPoint, Destination, linearPosition, angle, delaTime));
     particleSystem.setPosition(shape.getPosition());
     particleSystem.Update();
-}
-
-void Enemy::render(sf::RenderWindow &window)
-{
-    window.draw(particleSystem.getSystem());
-    window.draw(shape);
 }
 
 Enemy::Enemy(sf::Color color, sf::Vector2f position, sf::Vector2f Destination_, enemyAI algorithm_) :

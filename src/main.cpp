@@ -12,11 +12,6 @@
 #include "Enemy.hpp"
 #include "Utils.hpp"
 
-struct menuSystem
-{
-    sf::Text titleText, playText, quitText, scoreText;
-};
-
 int main()
 {
     srand(time(NULL));
@@ -87,30 +82,7 @@ int main()
     bool gameStatus {true};
 
     menuSystem gameMenu;
-
-    gameMenu.titleText.setFont(mainFont);
-    gameMenu.titleText.setString("Triangle Super");
-    gameMenu.titleText.setCharacterSize(72);
-    gameMenu.titleText.setPosition(mainWindow.getSize().x/2 - gameMenu.titleText.getGlobalBounds().width/2.f,
-                                   mainWindow.getSize().y/2 - gameMenu.titleText.getGlobalBounds().height/2.f);
-
-    gameMenu.playText.setFont(mainFont);
-    gameMenu.playText.setString("Play!");
-    gameMenu.playText.setCharacterSize(30);
-    gameMenu.playText.setPosition(mainWindow.getSize().x/3 - gameMenu.playText.getGlobalBounds().width/2.f,
-                                  (mainWindow.getSize().y/3) *2 - gameMenu.playText.getGlobalBounds().height/2.f);
-
-    gameMenu.quitText.setFont(mainFont);
-    gameMenu.quitText.setString("Quit.");
-    gameMenu.quitText.setCharacterSize(30);
-    gameMenu.quitText.setPosition(mainWindow.getSize().x/3 *2 - gameMenu.quitText.getGlobalBounds().width/2.f,
-                                  (mainWindow.getSize().y/3)*2-gameMenu.quitText.getGlobalBounds().height/2.f);
-
-    gameMenu.scoreText.setFont(mainFont);
-    gameMenu.scoreText.setCharacterSize(30);
-    gameMenu.scoreText.setPosition(mainWindow.getSize().x/2 - gameMenu.scoreText.getGlobalBounds().width/2.f,
-                                   (mainWindow.getSize().y/3)-gameMenu.scoreText.getGlobalBounds().height/2.f);
-
+    gameMenu.initialize(mainWindow, mainFont);
 
     while(mainWindow.isOpen())
     {
@@ -121,11 +93,6 @@ int main()
             {
             case sf::Event::Closed:
                 mainWindow.close();
-                break;
-
-            case sf::Event::Resized:
-                mainView.setSize(sf::Vector2f(mainEvent.size.width, mainEvent.size.height));
-                mainWindow.setView(mainView);
                 break;
 
             case sf::Event::MouseMoved:
@@ -210,13 +177,30 @@ int main()
             //Game
             if(levelClock.getElapsedTime().asMicroseconds()/1000.f > 1000.f/level)
             {
-                int randomInt {getRandomInteger(-1,9)};
+                int randomInt {static_cast<int>(getRandomNumber(-1.f,9.f))};
                 levelClock.restart();
                 auto AI = (randomInt >= 4 ? enemyAILine : enemyAISine);
                 randomInt %= 4;
-                sf::Vector2f target {static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().x))), static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))};
-                sf::Vector2f source = (randomInt < 2) ? ((randomInt == 0) ? sf::Vector2f {-20.f, static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))} :sf::Vector2f {static_cast<float>(mainWindow.getSize().x)+20.f, static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y)))}) :((randomInt == 3) ? sf::Vector2f {static_cast<float>(getRandomInteger(0, static_cast<float>(mainWindow.getSize().y))), -20.f} :
-                sf::Vector2f {static_cast<float>(getRandomInteger(0.f, static_cast<float>(mainWindow.getSize().y))), static_cast<float>(mainWindow.getSize().x)+20.f});
+                sf::Vector2f windowSize = transformVector<sf::Vector2u, sf::Vector2f>(mainWindow.getSize());
+                sf::Vector2f target {getRandomNumber(0.f, windowSize.x), getRandomNumber(0.f, windowSize.y)};
+                sf::Vector2f source;
+                switch(randomInt)
+                {
+                case 0:
+                    source = sf::Vector2f {-20.f, getRandomNumber(0.f, windowSize.y)};
+                    break;
+                case 1:
+                    source = sf::Vector2f {windowSize.x+20.f, getRandomNumber(0.f, windowSize.y)};
+                    break;
+                case 2:
+                    source = sf::Vector2f {getRandomNumber(0.f, windowSize.y), windowSize.x+20.f};
+                    break;
+                case 3:
+                    source = sf::Vector2f {getRandomNumber(0, windowSize.y), -20.f};
+                    break;
+                default:
+                    break;
+                }
                 Enemies.emplace_back(new Enemy {sf::Color::White, source, target, AI});
                 levelCounter++;
                 if(levelCounter > level * 10)
@@ -228,31 +212,32 @@ int main()
 
             incrementColor(enemyColor);
 
+            Score = scoreClock.getElapsedTime().asMilliseconds()*level/1000.f;
+
             for(unsigned int i = 0; i < Enemies.size(); ++i)
             {
-                Enemies[i].get()->Update(gameClock.getElapsedTime().asMicroseconds()/1000.f);
-                Enemies[i].get()->setColor(enemyColor);
-                Enemies[i].get()->render(mainWindow);
-                if(collides(Enemies[i].get()->getShape().getPosition(), player.getPosition()))
+                (*Enemies[i]).Update(gameClock.getElapsedTime().asMicroseconds()/1000.f);
+                (*Enemies[i]).setColor(enemyColor);
+                (*Enemies[i]).render(mainWindow);
+                if(collides((*Enemies[i]).getShape().getPosition(), player.getPosition()))
                 {
                     gameStatus = true;
                     Enemies.clear();
                     levelCounter = 0;
-                    Score = scoreClock.getElapsedTime().asMilliseconds()*level/1000.f;
                     level = 1;
                     break;
                 }
-                if(Enemies[i].get()->getShape().getPosition().x > mainWindow.getSize().x + 100 ||
-                        Enemies[i].get()->getShape().getPosition().x < -100 ||
-                        Enemies[i].get()->getShape().getPosition().y > mainWindow.getSize().y + 100 ||
-                        Enemies[i].get()->getShape().getPosition().y < -100)
+                if((*Enemies[i]).getShape().getPosition().x > mainWindow.getSize().x + 100 ||
+                        (*Enemies[i]).getShape().getPosition().x < -100 ||
+                        (*Enemies[i]).getShape().getPosition().y > mainWindow.getSize().y + 100 ||
+                        (*Enemies[i]).getShape().getPosition().y < -100)
                 {
                     Enemies.erase(Enemies.begin()+i);
                 }
             }
             stars.Update();
             mainWindow.draw(stars.getSystem());
-            std::string scoreString {std::to_string(scoreClock.getElapsedTime().asMilliseconds()*level/1000.f)};
+            std::string scoreString {std::to_string(Score)};
             scoreString = scoreString.substr(0, scoreString.find('.')+3);
 
             textOverlay.setString(std::string {"Level: "} + std::to_string(level) +
@@ -262,8 +247,7 @@ int main()
             mainWindow.draw(player);
             mainWindow.display();
 
-            sf::sleep(sf::milliseconds((1.f/fpsLimit)*1000.f - gameClock.getElapsedTime().asMicroseconds()/1000.f));
-            gameClock.restart();
+            sf::sleep(sf::milliseconds((1.f/fpsLimit)*1000.f - gameClock.restart().asMicroseconds()/1000.f));
         }
     }
     return 0;

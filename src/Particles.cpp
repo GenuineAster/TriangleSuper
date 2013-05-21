@@ -5,26 +5,16 @@
 #include <SFML/Graphics.hpp>
 #include "Particles.hpp"
 #include "Utils.hpp"
-const thor::ParticleSystem &Particles::getSystem()
-{
-    return System;
-}
+
+const thor::ParticleSystem &Particles::getSystem(){return System;}
+void Particles::Update(){System.update(Clock.restart());}
+void Particles::setColor(sf::Color color){Image.create(Image.getSize().x, Image.getSize().y, color);}
 
 void Particles::setPosition(sf::Vector2f position, float radius_)
 {
     if(radius_ < 0)
         radius_ = radius;
     Emitter->setParticlePosition(thor::Distributions::circle(position, radius_));
-}
-
-void Particles::Update()
-{
-    System.update(Clock.restart());
-}
-
-void Particles::setColor(sf::Color color)
-{
-    Image.create(Image.getSize().x, Image.getSize().y, color);
 }
 
 Particles::Particles(sf::Color color, int particleSize, int rate, sf::Vector2f force, sf::Vector2i timeRange,

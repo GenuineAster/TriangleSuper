@@ -4,10 +4,10 @@
 #include <cmath>
 #include "Utils.hpp"
 
-int getRandomInteger(double min, double max)
+float getRandomNumber(float min, float max)
 {
-    double r {static_cast<double>(rand()) / static_cast<double>(RAND_MAX)};
-    return static_cast<int>(min + r * (max - min));
+    float r {static_cast<float>(rand()) / RAND_MAX};
+    return min + r * (max - min);
 }
 
 sf::Color incrementColor(sf::Color &color)
