@@ -2,7 +2,6 @@
 
 int main()
 {
-    TSGame game;
-    game.run();
+    TSGame{}.run();
     return 0;
 }
