@@ -169,7 +169,6 @@ int main()
                 mainWindow.draw(gameMenu.scoreText);
                 gameMenu.scoreText.setPosition(mainWindow.getSize().x/2 - gameMenu.scoreText.getGlobalBounds().width/2.f, (mainWindow.getSize().y/3)-gameMenu.scoreText.getGlobalBounds().height/2.f);
             }
-            mainWindow.display();
         }
 
         else if(!gameStatus)
@@ -245,10 +244,9 @@ int main()
                                   std::string {"\nEntities: "} + std::to_string(Enemies.size()));
             mainWindow.draw(textOverlay);
             mainWindow.draw(player);
-            mainWindow.display();
-
-            sf::sleep(sf::milliseconds((1.f/fpsLimit)*1000.f - gameClock.restart().asMicroseconds()/1000.f));
         }
+        mainWindow.display();
+        sf::sleep(sf::milliseconds((1.f/fpsLimit)*1000.f - gameClock.restart().asMicroseconds()/1000.f));
     }
     return 0;
 }
